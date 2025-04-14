@@ -7,5 +7,6 @@ class Application < ApplicationRecord
   validates :description, presence: true
   validates :status, presence: true, numericality: true
 
-
+  has_many :application_pets
+  has_many :pets, through: :application_pets
 end
