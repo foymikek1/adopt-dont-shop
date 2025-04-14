@@ -11,4 +11,8 @@ class Application < ApplicationRecord
   has_many :pets, through: :application_pets
 
   enum :status, [ :In_progress, :Pending, :Accepted, :Rejected ]
+
+  def full_address
+    address + " " + city + " " + state + " " + zip_code.to_s
+  end
 end
