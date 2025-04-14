@@ -10,9 +10,8 @@ RSpec.describe "the application new", type: :feature do
       click_on "Submit"
       # Then I am taken back to the new applications page
       visit "/applications/new"
-
       # And I see a message that I must fill in those fields.
-      expect(page).to have_content("Please fill in all form fields.")
+      expect(page).to have_content("Application not created: Required information missing.")
     end
   end
 end
