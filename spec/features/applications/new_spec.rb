@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "the application new", type: :feature do
   describe "Starting an Application" do
-    it "form not Completed" do
+    it "form not completed" do
       # When I visit the new application page
       visit "/applications/new"
       # And I fail to fill in any of the form fields
