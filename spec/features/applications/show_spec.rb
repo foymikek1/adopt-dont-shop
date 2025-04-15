@@ -27,20 +27,21 @@ RSpec.describe "the application show" do
   end
 
   it 'searches for pets to add to application' do
-#As a visitor
-#When I visit an application's show page
+    @pet_3 = Pet.create!(name: "Scooby", age: 4, breed: "Great Dane", adoptable: true, shelter_id: @shelter.id)
+    #As a visitor
+    #When I visit an application's show page
     visit "/applications/#{@application.id}"
-#And that application has not been submitted,
+    #And that application has not been submitted,
     expect(page).to have_content("Add a Pet to this Application")
-#Then I see a section on the page to "Add a Pet to this Application"
-#In that section I see an input where I can search for Pets by name
-#When I fill in this field with a Pet's name
+    #Then I see a section on the page to "Add a Pet to this Application"
+    #In that section I see an input where I can search for Pets by name
+    #When I fill in this field with a Pet's name
     fill_in "Search", with: "Scooby"
-#And I click submit,
+    #And I click submit,
     click_on "Submit"
-#Then I am taken back to the application show page
-    expect(page).to have_current_path("/applications/#{@application.id}")
-#And under the search bar I see any Pet whose name matches my search
+    #Then I am taken back to the application show page
+    expect(page).to have_current_path("/applications/#{@application.id}?search=Scooby&commit=Submit")
+    #And under the search bar I see any Pet whose name matches my search
     expect(page).to have_content(@pet_1.name)
   end
 end
