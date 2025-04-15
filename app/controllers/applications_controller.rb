@@ -16,11 +16,6 @@ class ApplicationsController < ApplicationController
   end
 
   def show
-    if params[:search]
-      application_search
-      @pets = Pet.where(name: params[:search])
-      render :show
-    end
     application_search
   end
 

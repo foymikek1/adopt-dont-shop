@@ -9,19 +9,19 @@
 
 <p>Application status:<%=  @application.status %></p><br><br>
 
-<h5>Add a Pet to this Application:</h5><br>
-<%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
-  <%= f.label :search %>
-  <%= f.text_field :search %><br>
-  <%= f.submit "Submit" %>
-<% end %><br><br>
+<h6>Add a Pet to this Application</h6>
+<%= form_with url: "/applications/#{@application.id}/pets", method: :post do %>
+  <%= label_tag :search %>
+  <%= text_field_tag :search %><br>
+  <%= submit_tag "Submit" %>
+<% end %>
 
 <% if @pets %>
   <h5>Pet search results:</h5><br>
   <% @pets.each do |pet| %>
   <%= link_to pet.name, "/pets/#{pet.id}" %>
   <%= "from shelter: #{pet.shelter.name}" %>
-  <%= link_to "Apply for #{pet.name}", "/applications/#{@application.id}/pets/new" %>
+  <%= link_to "Apply for #{pet.name}", "/applications/#{@application.id}/pets", method: :post %>
   <br><br>
   <% end %>
 <% end %>
