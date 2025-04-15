@@ -1,0 +1,11 @@
+<p>Full address: <%= @application.full_address %></p>
+<p>About applicant: <%= @application.description %></p>
+
+<h4><%= @application.name %></h4>
+<h6>Pets on application:</h6>
+<% @application.pets.each do |pet| %>
+  <%= link_to pet.name, "/pets/#{pet.id}" %><br>
+<% end %><br>
+
+<p>Application status:<%=  @application.status %></p>
+
