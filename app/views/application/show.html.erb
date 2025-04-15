@@ -20,6 +20,8 @@
   <h5>Pet search results:</h5><br>
   <% @pets.each do |pet| %>
   <%= link_to pet.name, "/pets/#{pet.id}" %>
-  <%= "from shelter: #{pet.shelter.name}" %><br>
-  <% end %><br>
+  <%= "from shelter: #{pet.shelter.name}" %>
+  <%= link_to "Apply for #{pet.name}", "/applications/#{@application.id}/pets/new" %>
+  <br><br>
+  <% end %>
 <% end %>

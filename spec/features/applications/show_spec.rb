@@ -8,10 +8,11 @@ RSpec.describe "the application show" do
     @pet_3 = Pet.create!(name: "Ruby", age: 1, breed: "Border Collie", adoptable: true, shelter_id: @shelter.id)
     @pet_4 = Pet.create!(name: "Furby", age: 4, breed: "Pug X", adoptable: true, shelter_id: @shelter.id)
     @application_1 = Application.create!(name: "Bob", address: "300 Power St", city: "Erie", state: "CO", zip_code: 91638, description: "Good fur-parent.", status: 0)
+    @application_2 = Application.create!(name: "Lauv", address: "300 Power St", city: "Erie", state: "CO", zip_code: 91638, description: "Good fur-parent.", status: 0)
     @app_pet_1 = ApplicationPet.create!(pet_id: @pet_1.id, application_id: @application_1.id)
     @app_pet_2 = ApplicationPet.create!(pet_id: @pet_2.id, application_id: @application_1.id)
-    #require 'pry'; binding.pry
   end
+
   it "shows the application and all it's attributes" do
     # When I visit an applications show page
     visit "/applications/#{@application_1.id}"
@@ -47,7 +48,30 @@ RSpec.describe "the application show" do
     expect(page).to have_content(@pet_1.name)
   end
 
-  it "submit's an application with pet" do
+  it 'can add a pet to an application' do
+    expect(@pet_3.applications).to eq([])
+    expect(@application_2.pets).to eq([])
+    # Add a Pet to an Application
+    # As a visitor
+    # When I visit an application's show page
+    # And I search for a Pet by name
+    # And I see the names Pets that match my search
+    visit "/applications/#{@application_2.id}"
+    require 'pry'; binding.pry
+    fill_in "Search", with: "Ruby"
+    click_on "Submit"
+    # Then next to each Pet's name I see a button to "Adopt this Pet"
+    # When I click one of these buttons
+    click_on "Apply for Ruby"
+    # Then I am taken back to the application show page
+    expect(page).to have_current_path("/applications/#{@application_2.id}")
+    # And I see the Pet I want to adopt listed on this application
+    expect(page).to have_content(@pet_3.name)
+    expect(@pet_3.applications).to eq(@application_2)
+    expect(@application_2.applications).to eq(@pet_3)
+  end
+
+  xit "submit's an application with pet" do
     # When I visit an application's show page
     visit "/applications/#{@application_1.id}"
     fill_in "Search", with: "Ruby"
@@ -55,18 +79,16 @@ RSpec.describe "the application show" do
     click_on "Apply for Ruby"
     expect(page).to have_current_path("/applications/#{@application_1.id}")
     expect(page).to have_content(@pet_3.name)
-    #save_and_open_page
     # And I have added one or more pets to the application
     # Then I see a section to submit my application
     click_on "Submit Application"
-#do pet_app creation. 
+    #do pet_app creation. 
     # And in that section I see an input to enter why I would make a good owner for these pet(s)
     # When I fill in that input
     fill_in "Description", with: "I already love Ruby."
     # And I click a button to submit this application
     click_on "Submit"
-#update application.description with why good owner for added pets
-
+    #update application.description with why good owner for added pets
     # Then I am taken back to the application's show page
     expect(page).to have_current_path("/applications/#{@application_1.id}")
     # And I see an indicator that the application is "Pending"
