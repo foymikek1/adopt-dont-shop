@@ -16,7 +16,7 @@ class ApplicationsController < ApplicationController
   end
 
   def show
-    @application = Application.find(params[:application_id])
+    application_search
   end
 
   private
@@ -27,5 +27,9 @@ class ApplicationsController < ApplicationController
 
   def sanitize_application_params
     params[:status] = params[:offset].to_i
+  end
+
+  def application_search
+    @application = Application.find(params[:application_id])
   end
 end
